@@ -1,0 +1,38 @@
+protocol Base {
+    func call()
+}
+
+class AllyBase: Base {
+    func call() {
+        print("Calling...")
+    }
+}
+
+class EnemyBase: Base {
+    private var lineTo: AllyBase
+    
+    init(lineTo: AllyBase) {
+        self.lineTo = lineTo
+    }
+    
+    func call() {
+        lineTo.call()
+        print("Hello, I am your frined")
+    }
+}
+
+class HeadQuarters {
+    static func executeCallOn(lineTo: Base) {
+        print(lineTo.Call())
+    }
+}
+
+class WarApp {
+    func testCommunications() {
+        let allyBase = AllyBase()
+        HeadQuarters.executeCallOn(lineTo: allyBase)
+        
+        let proxy = EnemyBase(lineTo: allyBase)
+        HeadQuarters.executeCallOn(lineTo: proxy)
+    }
+}
